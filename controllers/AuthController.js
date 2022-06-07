@@ -53,7 +53,7 @@ const authCtrl = {
       res.cookie('refresh_token', refresh_token, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14),
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: 'strict',
       });
 
