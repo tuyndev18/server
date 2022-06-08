@@ -47,13 +47,13 @@ const authCtrl = {
       const access_token = authCtrl.generateAccessToken(user._id);
       const refresh_token = authCtrl.generateRefreshToken(user._id);
 
-      client.setEx(`rf_${user._id}`, 60 * 60 * 24, refresh_token);
+      client.setEx(`rf_${user._id}`, 60 * 60 * 24 * 7, refresh_token);
 
       //attach rf_token to cookie.
       res.cookie('refresh_token', refresh_token, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14),
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: 'strict',
       });
 
@@ -96,7 +96,7 @@ const authCtrl = {
         userId: userId,
       },
       process.env.GENERATE_AC_TOKEN,
-      { expiresIn: '10s' },
+      { expiresIn: '1d' },
     );
   },
   generateRefreshToken: (userId) => {
