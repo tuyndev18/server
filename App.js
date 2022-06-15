@@ -15,7 +15,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://f8-dev.vercel.app',
+    origin: 'http://localhost:3000/',
     methods: ['GET', 'POST'],
   },
 });
@@ -24,7 +24,7 @@ const io = new Server(server, {
 ConnectDB();
 
 app.use(express.json());
-app.use(cors({ origin: 'https://f8-dev.vercel.app', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cookieParser());
 
 socket(io);
