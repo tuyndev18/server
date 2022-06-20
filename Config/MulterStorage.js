@@ -1,11 +1,12 @@
-import multer from 'multer';
+import multer from "multer";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'Uploads/');
+    cb(null, "public/uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + Math.round(Math.random() * 1000));
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `image-${Date.now() * Math.ceil(Math.random() * 1000)}.${ext}`);
   },
 });
 
