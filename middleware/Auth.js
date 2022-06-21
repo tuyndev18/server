@@ -1,21 +1,20 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import { client } from "../Config/ConnectRedis.js";
 
-const auth = (req, res, next) => {
-	try {
-		const token = req.header('Authorization');
-		if (!token) return res.status(401).json({ message: 'Invalid Authentication' });
-		jwt.verify(token, process.env.GENERATE_AC_TOKEN, (err, user) => {
-			if (err) 
-			{
-				
-				return res.status(401).json({ message: 'Authorization not valid' });
-			}
-			req.user = user;
-			next();
-		});
-	} catch (error) {
-		return res.status(500).json({ message: error.message });
-	}
+const auth = async (req, res, next) => {
+  try {
+    const token = req.header("Authorization");
+    const current_token = await client.get("current_token");
+    if (!token) {
+      return res.status(401).json({ message: "Invalid Authentication" });
+    }
+    if (!current_token || current_token !== token) {
+      return res.status(401).json({ message: "Authorization not valid" });
+    }
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 export default auth;

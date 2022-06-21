@@ -6,6 +6,7 @@ import { ErrorHandling } from "./Utils/ErrorHandling.js";
 import ParentRoute from "./routes/ParentRoute.js";
 import { createServer } from "http";
 import ConnectDB from "./Config/ConnectDB.js";
+import { client } from "./Config/ConnectRedis.js";
 const app = express();
 const server = createServer(app);
 

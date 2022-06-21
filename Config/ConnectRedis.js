@@ -1,4 +1,4 @@
-import redis from 'redis';
+import redis from "redis";
 
 export const client = redis.createClient({
   socket: {
@@ -9,18 +9,18 @@ export const client = redis.createClient({
   password: process.env.PASS_REDIS,
 });
 
-// (async () => {
-//     try {
-//       await client.connect();
-//     } catch (error) {
-//       console.error('error while connecting redis', error);
-//     }
-//   })();
-  
-// client.on('ready', () => {
-//   console.log('redis is connected');
-// });
+(async () => {
+  try {
+    await client.connect();
+  } catch (error) {
+    console.error("error while connecting redis", error);
+  }
+})();
 
-// client.on('error', (err) => {
-//   console.log('redis is disconnected: ', err);
-// });
+client.on("ready", () => {
+  console.log("redis is connected");
+});
+
+client.on("error", (err) => {
+  console.log("redis is disconnected: ", err);
+});

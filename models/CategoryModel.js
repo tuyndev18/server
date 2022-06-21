@@ -1,13 +1,17 @@
 import mongoose from "mongoose";
+import slug from "mongoose-slug-updater";
+
+mongoose.plugin(slug);
 
 const CategoryModel = new mongoose.Schema(
   {
-    name: {
+    label: {
       type: String,
     },
     banner: {
-      type: String,
+      type: String
     },
+    value: { type: String, slug: "label", slugPaddingSize: 3, unique: true },
   },
   {
     timestamps: true,
