@@ -3,6 +3,7 @@ import CategoryController from "../controllers/CategoryController.js";
 import auth from "../middleware/Auth.js";
 const router = express.Router();
 
+router.get("/all", CategoryController.getAll);
 router.use(auth);
 
 router.get("/", CategoryController.getCategory);

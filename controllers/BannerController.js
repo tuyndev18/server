@@ -13,6 +13,14 @@ const BannerController = {
       next(error);
     }
   },
+  getAll: async (req, res, next) => {
+    try {
+      const data = await Banners.find({});
+      res.json({ data });
+    } catch (error) {
+      next(error);
+    }
+  },
 
   getBanner: async (req, res, next) => {
     try {

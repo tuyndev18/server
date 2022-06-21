@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import slug from "mongoose-slug-updater";
+
+mongoose.plugin(slug);
 
 const ProductModel = new mongoose.Schema(
   {
@@ -13,6 +16,7 @@ const ProductModel = new mongoose.Schema(
     description: { type: String, required: true },
     detail: { type: String, required: true },
     gallery: [{ type: String }],
+    slug: { type: String, slug: "title", slugPaddingSize: 3, unique: true },
   },
   {
     timestamps: true,

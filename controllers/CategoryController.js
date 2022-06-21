@@ -13,7 +13,14 @@ const CategoryController = {
       next(error);
     }
   },
-
+  getAll: async (req, res, next) => {
+    try {
+      const data = await Category.find({});
+      res.json({ data });
+    } catch (error) {
+      next(error);
+    }
+  },
   getCategory: async (req, res, next) => {
     try {
       const query = new QueryMethod(req.query, Category.find({}))

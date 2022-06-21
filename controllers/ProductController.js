@@ -19,13 +19,42 @@ const ProductController = {
       next(error);
     }
   },
-  
+
   getProducts: async (req, res, next) => {
     try {
-      const query = new QueryMethod(req.query, Products.find({})).pagination().sort();
+      const query = new QueryMethod(req.query, Products.find({}))
+        .pagination()
+        .sort();
       const data = await query.method;
       const pageCount = Math.ceil((await Products.count()) / req.query.limit);
       res.json({ data: { data, pageCount } });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getAll: async (req, res, next) => {
+    try {
+      const data = await Products.find({})
+        .limit(10)
+        .sort({ createdAt: "desc" });
+      res.json({ data });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getSlug: async (req, res, next) => {
+    try {
+      const data = await Products.find({}, { slug: 1 });
+      res.json({ data });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getProductBySlug: async (req, res, next) => {
+    try {
+      const { slug } = req.params;
+      const data = await Products.find({ slug });
+      res.json({ data });
     } catch (error) {
       next(error);
     }
