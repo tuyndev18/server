@@ -1,4 +1,5 @@
 import Category from "../models/CategoryModel.js";
+import Product from "../models/ProductModel.js";
 import { QueryMethod } from "../Utils/QueryMethod.js";
 const CategoryController = {
   addCategory: async (req, res, next) => {
@@ -9,6 +10,22 @@ const CategoryController = {
         banner,
       });
       res.json({ data, message: "add new categories" });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getFilter: async (req, res, next) => {
+    try {
+      const { category } = req.query;
+      let data;
+      if (!category) {
+        data = await Product.find({}).sort({ createdAt: "desc" });
+      } else {
+        data = await Product.find({
+          "categories.value": category,
+        }).sort({ createdAt: "desc" });
+      }
+      res.json({ data });
     } catch (error) {
       next(error);
     }

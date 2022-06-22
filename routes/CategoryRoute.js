@@ -4,6 +4,7 @@ import auth from "../middleware/Auth.js";
 const router = express.Router();
 
 router.get("/all", CategoryController.getAll);
+router.get("/filter", CategoryController.getFilter);
 router.use(auth);
 
 router.get("/", CategoryController.getCategory);
