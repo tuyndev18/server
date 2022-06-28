@@ -4,15 +4,31 @@ import { QueryMethod } from "../Utils/QueryMethod.js";
 const ProductController = {
   addProducts: async (req, res, next) => {
     try {
-      const { categories, title, description, detail, gallery, price } =
-        req.body;
-      const data = await Products.create({
-        categories,
+      const {
+        category,
         title,
         description,
         detail,
         gallery,
         price,
+        color,
+        type,
+        size,
+        subCategory,
+        texture,
+      } = req.body;
+      const data = await Products.create({
+        category,
+        title,
+        description,
+        detail,
+        gallery,
+        price,
+        size,
+        color,
+        type,
+        subCategory,
+        texture,
       });
       res.json({ data, message: "add new products" });
     } catch (error) {
@@ -20,13 +36,17 @@ const ProductController = {
     }
   },
 
-  getProducts: async (req, res, next) => {
+  findProductByCategory: async (req, res, next) => {
     try {
-      const query = new QueryMethod(req.query, Products.find({}))
+      const query = new QueryMethod(
+        req.query,
+        Products.find({ "category.value": req.params.slug })
+      )
         .pagination()
         .sort();
       const data = await query.method;
-      const pageCount = Math.ceil((await Products.count()) / req.query.limit);
+      const total = await Products.find({ "category.value": req.params.slug });
+      const pageCount = Math.ceil(total.length / req.query.limit);
       res.json({ data: { data, pageCount } });
     } catch (error) {
       next(error);
@@ -34,7 +54,8 @@ const ProductController = {
   },
   getAll: async (req, res, next) => {
     try {
-      const data = await Products.find({})
+      const { gte } = req.query;
+      const data = await Products.find({ price: { $gte: gte || 0 } })
         .limit(10)
         .sort({ createdAt: "desc" });
       res.json({ data });

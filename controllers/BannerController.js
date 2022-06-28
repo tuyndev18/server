@@ -3,10 +3,10 @@ import { QueryMethod } from "../Utils/QueryMethod.js";
 const BannerController = {
   addBanner: async (req, res, next) => {
     try {
-      const { title, banner } = req.body;
+      const { label, banner } = req.body;
       const data = await Banners.create({
         banner,
-        title,
+        label,
       });
       res.json({ data, message: "add new banners" });
     } catch (error) {

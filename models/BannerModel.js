@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const BannerModel = new mongoose.Schema(
   {
-    title: {
+    label: {
       type: String,
     },
     banner: {

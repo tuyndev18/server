@@ -5,11 +5,11 @@ import auth from "../middleware/Auth.js";
 
 router.get("/all", ProductController.getAll);
 router.get("/slug", ProductController.getSlug);
-router.get("/slug/:slug", ProductController.getProductBySlug);
+router.get("/:slug", ProductController.getProductBySlug);
 
 router.use(auth);
 
-router.get("/", ProductController.getProducts);
+router.get("/category/:slug", ProductController.findProductByCategory);
 router.post("/", ProductController.addProducts);
 router.put("/:id", ProductController.editProducts);
 router.delete("/:id", ProductController.deleteProducts);
