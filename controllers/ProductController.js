@@ -10,10 +10,8 @@ const ProductController = {
         description,
         detail,
         gallery,
-        price,
         color,
         type,
-        size,
         subCategory,
         texture,
       } = req.body;
@@ -23,8 +21,6 @@ const ProductController = {
         description,
         detail,
         gallery,
-        price,
-        size,
         color,
         type,
         subCategory,
@@ -54,11 +50,16 @@ const ProductController = {
   },
   getAll: async (req, res, next) => {
     try {
-      const { gte } = req.query;
-      const data = await Products.find({ price: { $gte: gte || 0 } })
-        .limit(10)
-        .sort({ createdAt: "desc" });
-      res.json({ data });
+      const resultFilter = new QueryMethod(req.query, Products).filter();
+      const query = new QueryMethod(req.query, Products)
+        .filter()
+        .pagination()
+        .sort();
+      const data = await query.method;
+      const page = await resultFilter.method;
+      res.json({
+        data: { data, pageCount: Math.ceil(page.length / req.query.limit) },
+      });
     } catch (error) {
       next(error);
     }

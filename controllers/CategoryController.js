@@ -16,57 +16,29 @@ const CategoryController = {
       next(error);
     }
   },
-  getAll: async (req, res, next) => {
-    try {
-      const data = await Category.find({});
-      res.json({ data });
-    } catch (error) {
-      next(error);
-    }
-  },
+
   getChild: async (req, res, next) => {
     try {
-      const data = await Category.find({ parentId: req.params.id });
+      const parent = await Category.find({ value: req.params.slug });
+      const data = await Category.find({ parentId: parent[0]._id });
       res.json({ data });
     } catch (error) {
       next(error);
     }
   },
-  getSub: async (req, res, next) => {
+
+  getParent: async (req, res, next) => {
     try {
-      const result = await Category.find({ value: req.params.value });
-      const convert = await Category.find({ parentId: result[0]._id }).lean();
-      const data = convert.map((val) => ({
-        value: val.value,
-        label: val.label,
-      }));
-      res.json({ data });
-    } catch (error) {
-      next(error);
-    }
-  },
-  getMain: async (req, res, next) => {
-    try {
-      const result = await Category.find({
+      const data = await Category.find({
         parentId: { $exists: false },
-      }).lean();
-      const data = result.map((val) => ({
-        value: val.value,
-        label: val.label,
-      }));
+      });
+
       res.json({ data });
     } catch (error) {
       next(error);
     }
   },
-  getCategory: async (req, res, next) => {
-    try {
-      const data = await Category.find({ parentId: { $exists: false } });
-      res.json({ data });
-    } catch (error) {
-      next(error);
-    }
-  },
+
   editCategory: async (req, res, next) => {
     try {
       await Category.updateOne({ _id: req.params.id }, req.body);

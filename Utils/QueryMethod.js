@@ -35,4 +35,30 @@ export class QueryMethod {
     this.method = this.method.lean();
     return this;
   }
+  filter() {
+    let Filters = [{}];
+    if (this.query.category) {
+      Filters.push({ "category.value": this.query.category });
+    }
+    if (this.query.subCategory) {
+      Filters.push({
+        "subCategory.value": this.query.subCategory,
+      });
+    }
+    if (this.query.texture) {
+      Filters.push({
+        "texture.value": this.query.texture,
+      });
+    }
+    if (this.query.type) {
+      Filters.push({
+        "type.value": this.query.type,
+      });
+    }
+    if (this.query.color) {
+      Filters.push({ "color.value": { $regex: `${this.query.color}` } });
+    }
+    this.method = this.method.find({ $and: Filters });
+    return this;
+  }
 }

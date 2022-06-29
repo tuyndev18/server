@@ -20,8 +20,6 @@ const ProductModel = new mongoose.Schema(
     texture: {
       type: Object,
     },
-    price: Number,
-    size: Number,
     title: { type: String },
     description: { type: String },
     detail: { type: String },
@@ -35,3 +33,5 @@ const ProductModel = new mongoose.Schema(
 );
 const Products = mongoose.model("Products", ProductModel);
 export default Products;
+
+
