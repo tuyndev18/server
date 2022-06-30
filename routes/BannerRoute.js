@@ -3,11 +3,10 @@ import BannerController from "../controllers/BannerController.js";
 import auth from "../middleware/Auth.js";
 const router = express.Router();
 
-router.get("/all", BannerController.getAll);
+router.get("/", BannerController.getBanner);
 
 router.use(auth);
 
-router.get("/", BannerController.getBanner);
 router.post("/", BannerController.addBanner);
 router.put("/:id", BannerController.editBanner);
 router.delete("/:id", BannerController.deleteBanner);

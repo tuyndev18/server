@@ -13,14 +13,6 @@ const FeedBackController = {
       next(error);
     }
   },
-  getAll: async (req, res, next) => {
-    try {
-      const data = await FeedBackModel.find({});
-      res.json({ data });
-    } catch (error) {
-      next(error);
-    }
-  },
 
   getFeedBack: async (req, res, next) => {
     try {
