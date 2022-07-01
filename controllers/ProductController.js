@@ -1,3 +1,4 @@
+import Palettes from "../models/PaletteModel.js";
 import Products from "../models/ProductModel.js";
 import { QueryMethod } from "../Utils/QueryMethod.js";
 
@@ -76,7 +77,34 @@ const ProductController = {
     try {
       const { slug } = req.params;
       const data = await Products.find({ slug });
-      res.json({ data });
+
+      const same = await Products.find({
+        "subCategory.value": data[0].subCategory.value,
+      });
+      const mergeColor = same.map(async (product) => {
+        const getColor = await Palettes.find({
+          value: product.color.value,
+          category: product.category.value,
+        });
+        return {
+          slug: product.slug,
+          banner: getColor[0].banner,
+        };
+      });
+      const color = await Promise.all(mergeColor);
+      const latest = await Products.find({})
+        .sort({ createdAt: "desc" })
+        .limit(8);
+      res.json({
+        data: {
+          color,
+          products: data[0],
+          categories: {
+            title: same < 4 ? "Products of the same type" : "Latest Product",
+            data: same < 4 ? same : latest,
+          },
+        },
+      });
     } catch (error) {
       next(error);
     }
