@@ -33,22 +33,6 @@ const ProductController = {
     }
   },
 
-  findProductByCategory: async (req, res, next) => {
-    try {
-      const query = new QueryMethod(
-        req.query,
-        Products.find({ "category.value": req.params.slug })
-      )
-        .pagination()
-        .sort();
-      const data = await query.method;
-      const total = await Products.find({ "category.value": req.params.slug });
-      const pageCount = Math.ceil(total.length / req.query.limit);
-      res.json({ data: { data, pageCount } });
-    } catch (error) {
-      next(error);
-    }
-  },
   getAll: async (req, res, next) => {
     try {
       const resultFilter = new QueryMethod(req.query, Products).filter();

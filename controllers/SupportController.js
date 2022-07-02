@@ -17,14 +17,6 @@ const SupportController = {
       next(error);
     }
   },
-  getAll: async (req, res, next) => {
-    try {
-      const data = await SupportModel.find({});
-      res.json({ data });
-    } catch (error) {
-      next(error);
-    }
-  },
 
   getSupport: async (req, res, next) => {
     try {

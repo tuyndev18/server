@@ -3,11 +3,10 @@ import SupportController from "../controllers/SupportController.js";
 import auth from "../middleware/Auth.js";
 const router = express.Router();
 
-router.get("/all", SupportController.getAll);
+router.get("/", SupportController.getSupport);
 
 router.use(auth);
 
-router.get("/", SupportController.getSupport);
 router.post("/", SupportController.addSupport);
 router.put("/:id", SupportController.editSupport);
 router.delete("/:id", SupportController.deleteSupport);
