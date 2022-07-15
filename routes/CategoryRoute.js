@@ -3,8 +3,7 @@ import CategoryController from "../controllers/CategoryController.js";
 import auth from "../middleware/Auth.js";
 const router = express.Router();
 
-router.get("/", CategoryController.getParent);
-router.get("/:slug", CategoryController.getChild);
+router.get("/", CategoryController.getCategory);
 
 router.use(auth);
 

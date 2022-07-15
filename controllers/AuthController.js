@@ -37,9 +37,15 @@ const authCtrl = {
   },
   changePassword: async (req, res, next) => {
     try {
-      const [currentPass, newPass] = req.body;
-      await client.del("current_token");
-      res.status(200).json({ message: "Logged out successfully!" });
+      const { currentPass, newPass } = req.body;
+      const user = await UsersModal.findOne({});
+      const isMatch = await bcrypt.compare(currentPass, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: "Mật khẩu cũ không đúng !" });
+      }
+      const hashPass = await bcrypt.hash(newPass, 10);
+      await UsersModal.updateOne({ _id: user._id }, { password: hashPass });
+      res.status(200).json({ message: "Đổi mật khẩu thành công!" });
     } catch (error) {
       next(error);
     }

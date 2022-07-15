@@ -18,12 +18,12 @@ const PaletteController = {
     try {
       const query = new QueryMethod(
         req.query,
-        Palette.find({ category: req.params.id })
+        Palette.find({ category: req.query.category })
       )
         .pagination()
         .sort();
       const data = await query.method;
-      const count = await Palette.find({ category: req.params.id });
+      const count = await Palette.find({ category: req.query.category });
       const pageCount = Math.ceil(count.length / req.query.limit);
       res.json({ data: { data, pageCount } });
     } catch (error) {

@@ -1,38 +1,36 @@
 import Category from "../models/CategoryModel.js";
-import { QueryMethod } from "../Utils/QueryMethod.js";
 
 const CategoryController = {
   addCategory: async (req, res, next) => {
     try {
       const { label, banner, description, parentId } = req.body;
-      const data = await Category.create({
+      await Category.create({
         label,
         banner,
         description,
         parentId,
       });
-      res.json({ data, message: "add new categories" });
+      res.json({ message: "add new categories" });
     } catch (error) {
       next(error);
     }
   },
 
-  getChild: async (req, res, next) => {
+  getCategory: async (req, res, next) => {
     try {
-      const parent = await Category.find({ value: req.params.slug });
-      const data = await Category.find({ parentId: parent[0]._id });
-      res.json({ data });
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  getParent: async (req, res, next) => {
-    try {
-      const data = await Category.find({
-        parentId: { $exists: false },
+      const categories = await Category.find({}).lean();
+      const listCategory = categories.filter(
+        (element) => element.parentId === undefined
+      );
+      const data = listCategory.map((value) => {
+        const childCategory = categories.filter(
+          (val) => val?.parentId === value._id.toString()
+        );
+        return {
+          ...value,
+          childCategory,
+        };
       });
-
       res.json({ data });
     } catch (error) {
       next(error);

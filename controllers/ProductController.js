@@ -72,7 +72,7 @@ const ProductController = {
         });
         return {
           slug: product.slug,
-          banner: getColor[0].banner,
+          banner: getColor[0]?.banner,
         };
       });
       const color = await Promise.all(mergeColor);
