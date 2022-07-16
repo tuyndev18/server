@@ -27,10 +27,43 @@ const AboutController = {
       next(error);
     }
   },
+  getSlug: async (req, res, next) => {
+    try {
+      const result = await AboutModel.find({});
+      const data = result.map((val) => {
+        if (val.isMain) {
+          return {
+            slug: "main",
+          };
+        }
+        return {
+          slug: val.slug,
+        };
+      });
+      res.json({ data });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getMainAbout: async (req, res, next) => {
+    try {
+      const data = await AboutModel.find({ isMain: { $exists: true } });
+      const relative = await AboutModel.find({
+        isMain: { $exists: false },
+      }).limit(6);
+
+      res.json({ data: { data, relative } });
+    } catch (error) {
+      next(error);
+    }
+  },
   getAboutBySlug: async (req, res, next) => {
     try {
       const data = await AboutModel.find({ slug: req.params.slug });
-      res.json({ data });
+      const relative = await AboutModel.find({
+        slug: { $ne: req.params.slug },
+      }).limit(6);
+      res.json({ data: { data, relative } });
     } catch (error) {
       next(error);
     }

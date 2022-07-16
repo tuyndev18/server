@@ -3,6 +3,8 @@ import AboutController from "../controllers/AboutController.js";
 import auth from "../middleware/Auth.js";
 const router = express.Router();
 
+router.get("/slug", AboutController.getSlug);
+router.get("/main", AboutController.getMainAbout);
 router.get("/:slug", AboutController.getAboutBySlug);
 
 router.use(auth);

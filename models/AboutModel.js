@@ -12,6 +12,7 @@ const AboutModel = new mongoose.Schema(
       type: String,
     },
     slug: { type: String, slug: "label", slugPaddingSize: 3, unique: true },
+    isMain: { type: Boolean },
     description: { type: String },
   },
   {
