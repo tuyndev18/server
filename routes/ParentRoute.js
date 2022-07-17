@@ -4,6 +4,7 @@ const Router = express.Router();
 import uploadRoute from "./UploadRoute.js";
 import ProductRoute from "./ProductRoute.js";
 import CategoryRoute from "./CategoryRoute.js";
+import CatalogueRoute from "./CatalogueRoute.js";
 import FeedBackRoute from "./FeedBackRoute.js";
 import BannerRoute from "./BannerRoute.js";
 import DiscountRoute from "./DiscountRoute.js";
@@ -21,6 +22,7 @@ export default function ParentRoute(app) {
   Router.use("/info", InfoRoute);
   Router.use("/abouts", AboutRoute);
   Router.use("/palette", PaletteRoute);
+  Router.use("/catalogues", CatalogueRoute);
   Router.use("/discounts", DiscountRoute);
   Router.use("/customers", CustomerRoute);
   Router.use("/feedbacks", FeedBackRoute);

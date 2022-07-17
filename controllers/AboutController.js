@@ -31,11 +31,6 @@ const AboutController = {
     try {
       const result = await AboutModel.find({});
       const data = result.map((val) => {
-        if (val.isMain) {
-          return {
-            slug: "main",
-          };
-        }
         return {
           slug: val.slug,
         };
