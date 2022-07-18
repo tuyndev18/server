@@ -6,7 +6,6 @@ const CategoryController = {
       const { label, banner, description, parentId } = req.body;
       await Category.create({
         label,
-        banner,
         description,
         parentId,
       });

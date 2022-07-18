@@ -14,6 +14,7 @@ import PaletteRoute from "./PaletteRoute.js";
 import CustomerRoute from "./CustomerRoute.js";
 import AboutRoute from "./AboutRoute.js";
 import InfoRoute from "./InfoRoute.js";
+import VideoRoute from "./VideoRoute.js";
 
 export default function ParentRoute(app) {
   Router.use("/auth", AuthRoute);
@@ -23,6 +24,7 @@ export default function ParentRoute(app) {
   Router.use("/abouts", AboutRoute);
   Router.use("/palette", PaletteRoute);
   Router.use("/catalogues", CatalogueRoute);
+  Router.use("/videos", VideoRoute);
   Router.use("/discounts", DiscountRoute);
   Router.use("/customers", CustomerRoute);
   Router.use("/feedbacks", FeedBackRoute);

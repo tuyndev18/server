@@ -23,6 +23,9 @@ const InfoModel = new mongoose.Schema(
     email: {
       type: String,
     },
+    thumbnail: {
+      type: String,
+    },
   },
   {
     timestamps: true,

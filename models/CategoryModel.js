@@ -8,9 +8,6 @@ const CategoryModel = new mongoose.Schema(
     label: {
       type: String,
     },
-    banner: {
-      type: String,
-    },
     value: { type: String, slug: "label", slugPaddingSize: 3, unique: true },
     description: { type: String },
     parentId: { type: String },
